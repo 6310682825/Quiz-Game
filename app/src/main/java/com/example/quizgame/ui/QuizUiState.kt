@@ -1,5 +1,7 @@
 package com.example.quizgame.ui
 
+import com.example.quizgame.data.Questions
+
 data class QuizUiState(
-    val currentQuizWord: String = ""
+    val currentQuestion: Questions = Questions("", listOf(""), "")
 )

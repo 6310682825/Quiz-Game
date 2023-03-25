@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -14,20 +16,26 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.quizgame.ui.theme.QuizGameTheme
 import com.example.quizgame.R
+import com.example.quizgame.data.Questions
 import java.time.format.TextStyle
 
 @Preview(showBackground = true)
 @Composable
-fun QuizScreen(modifier: Modifier = Modifier) {
+fun QuizScreen(
+    modifier: Modifier = Modifier,
+    quizViewModel: QuizViewModel = viewModel()
+    ) {
+    val quizUiState by quizViewModel.uiState.collectAsState()
     Column(
         modifier = modifier.padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         QuizStatus()
-        QuizLayout()
+        QuizLayout(currentQuestion = quizUiState.currentQuestion)
         Row(){
             OutlinedButton(onClick = { /*TODO*/ },
                 modifier = modifier.width(180.dp)
@@ -64,7 +72,9 @@ fun QuizStatus(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun QuizLayout(modifier: Modifier = Modifier) {
+fun QuizLayout(
+    currentQuestion: Questions,
+    modifier: Modifier = Modifier) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(12.dp)
