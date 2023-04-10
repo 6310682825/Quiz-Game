@@ -21,14 +21,14 @@ class QuizViewModel : ViewModel() {
     }
     private fun pickRandomQuestion(): Questions {
         currentQuestion = allQuestions.random()
-        if (questionsAsked.contains(currentQuestion)) {
-            Log.i("test","questions asked")
-            return pickRandomQuestion()
+        for (question in questionsAsked) {
+            if (question.text === currentQuestion.text) {
+                Log.i("test","questions asked")
+                return pickRandomQuestion()
+            }
         }
-        else {
-            questionsAsked.add(currentQuestion)
-            return shuffleOption(currentQuestion)
-        }
+        questionsAsked.add(currentQuestion)
+        return shuffleOption(currentQuestion)
     }
 
     private fun shuffleOption(question: Questions): Questions {
@@ -37,7 +37,7 @@ class QuizViewModel : ViewModel() {
     }
 
     private fun updateQuizState(updatedScore: Int) {
-        if (questionsAsked.size > 10) {
+        if (questionsAsked.size == 10) {
             _uiState.update { currentQuestion ->
                 currentQuestion.copy(
                     score = updatedScore,
@@ -70,7 +70,6 @@ class QuizViewModel : ViewModel() {
         updateQuizState(updatedScore)
     }
     fun resetGame() {
-        Log.i("text", "It's working!")
         questionsAsked.clear()
         _uiState.value = QuizUiState(currentQuestion = pickRandomQuestion())
     }
