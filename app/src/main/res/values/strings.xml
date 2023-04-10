@@ -2,6 +2,10 @@
     <string name="app_name">Quiz Game</string>
     <string name="quiz_count">%d of 10 quizs</string>
     <string name="score">Score: %d</string>
-    <string name="instruction">Try to guess the correct word</string>
+    <string name="instruction">Try to guess the correct answer</string>
     <string name="skip">Skip</string>
+    <string name="game_over">Final Result</string>
+    <string name="final_score">Your Score: %d</string>
+    <string name="exit">Exit</string>
+    <string name="play_again">Play Again</string>
 </resources>
